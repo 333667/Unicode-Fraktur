@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+    <link rel="icon" type="image/png" href="A.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode Fraktur</title>
+    <style>
+        #textInput, #frakturOutput, #boldfrakturOutput {
+            font-size: 20px;
+            width: 100%; 
+            max-width: 300px;
+            box-sizing: border-box;
+            height: 200px; 
+            resize: none; 
+            display: block; 
+            margin: 0 auto; 
+            border: 2px solid #000000;
+            outline: 2px solid #808080; 
+        }
+        @media screen and (max-width: 810px) {
+            #textInput, #frakturOutput, #boldfrakturOutput {
+                font-size: 20px;
+                width: 100%; 
+                box-sizing: border-box;
+                height: 540px; 
+                resize: none; 
+                display: block; 
+                margin: 0 auto; 
+                border: 2px solid #000000;
+                outline: 2px solid #808080;
+            }
+        }
+        body {
+            background-image: url('4pattern.png');
+            background-repeat: repeat; 
+            background-size: 144px 144px; 
+        }
+        h1 {
+            backdrop-filter:saturate(150%) blur(8px);
+	    -webkit-backdrop-filter:saturate(150%) blur(8px);
+	    background-color:rgba(255,255,255,.3);
+        }
+        button {
+        background-color: #FFFFF0;
+        }
+        button:hover {
+        background-color: #FFD700; 
+        }
+    </style>
+    <script>
+    const frakturMap = {
+        'A': '\u{1D504}', 'B': '\u{1D505}', 'C': '\u{212D}', 'D': '\u{1D507}', 'E': '\u{1D508}',
+        'F': '\u{1D509}', 'G': '\u{1D50A}', 'H': '\u{210C}', 'I': '\u{2111}', 'J': '\u{1D50D}',
+        'K': '\u{1D50E}', 'L': '\u{1D50F}', 'M': '\u{1D510}', 'N': '\u{1D511}', 'O': '\u{1D512}',
+        'P': '\u{1D513}', 'Q': '\u{1D514}', 'R': '\u{211C}', 'S': '\u{1D516}', 'T': '\u{1D517}',
+        'U': '\u{1D518}', 'V': '\u{1D519}', 'W': '\u{1D51A}', 'X': '\u{1D51B}', 'Y': '\u{1D51C}',
+        'Z': '\u{2128}',
+        'a': '\u{1D51E}', 'b': '\u{1D51F}', 'c': '\u{1D520}', 'd': '\u{1D521}', 'e': '\u{1D522}',
+        'f': '\u{1D523}', 'g': '\u{1D524}', 'h': '\u{1D525}', 'i': '\u{1D526}', 'j': '\u{1D527}',
+        'k': '\u{1D528}', 'l': '\u{1D529}', 'm': '\u{1D52A}', 'n': '\u{1D52B}', 'o': '\u{1D52C}',
+        'p': '\u{1D52D}', 'q': '\u{1D52E}', 'r': '\u{1D52F}', 's': '\u{1D530}', 't': '\u{1D531}',
+        'u': '\u{1D532}', 'v': '\u{1D533}', 'w': '\u{1D534}', 'x': '\u{1D535}', 'y': '\u{1D536}',
+        'z': '\u{1D537}'
+    };
+    const boldfrakturMap = {
+        'A': '\u{1D56C}', 'B': '\u{1D56D}', 'C': '\u{1D56E}', 'D': '\u{1D56F}', 'E': '\u{1D570}', 
+        'F': '\u{1D571}', 'G': '\u{1D572}', 'H': '\u{1D573}', 'I': '\u{1D574}', 'J': '\u{1D575}', 
+        'K': '\u{1D576}', 'L': '\u{1D577}', 'M': '\u{1D578}', 'N': '\u{1D579}', 'O': '\u{1D57A}', 
+        'P': '\u{1D57B}', 'Q': '\u{1D57C}', 'R': '\u{1D57D}', 'S': '\u{1D57E}', 'T': '\u{1D57F}', 
+        'U': '\u{1D580}', 'V': '\u{1D581}', 'W': '\u{1D582}', 'X': '\u{1D583}', 'Y': '\u{1D584}', 
+        'Z': '\u{1D585}',
+        'a': '\u{1D586}', 'b': '\u{1D587}', 'c': '\u{1D588}', 'd': '\u{1D589}', 'e': '\u{1D58A}', 
+        'f': '\u{1D58B}', 'g': '\u{1D58C}', 'h': '\u{1D58D}', 'i': '\u{1D58E}', 'j': '\u{1D58F}', 
+        'k': '\u{1D590}', 'l': '\u{1D591}', 'm': '\u{1D592}', 'n': '\u{1D593}', 'o': '\u{1D594}', 
+        'p': '\u{1D595}', 'q': '\u{1D596}', 'r': '\u{1D597}', 's': '\u{1D598}', 't': '\u{1D599}', 
+        'u': '\u{1D59A}', 'v': '\u{1D59B}', 'w': '\u{1D59C}', 'x': '\u{1D59D}', 'y': '\u{1D59E}', 
+        'z': '\u{1D59F}'
+    };
+
+        function convertToFraktur() {
+            var inputText = document.getElementById('textInput').value;
+            var frakturText = '';
+            for (var char of inputText) {
+                frakturText += frakturMap[char] || char; 
+            }
+            document.getElementById('frakturOutput').value = frakturText;
+        }
+
+        function convertToBoldFraktur() {
+            var inputText = document.getElementById('textInput').value;
+            var boldfrakturText = '';
+            for (var char of inputText) {
+                boldfrakturText += boldfrakturMap[char] || char; 
+            }
+            document.getElementById('boldfrakturOutput').value = boldfrakturText;
+        }
+        function clearText() {
+            document.getElementById('textInput').value = ''; 
+            document.getElementById('frakturOutput').value = ''; 
+            document.getElementById('boldfrakturOutput').value = ''; 
+        }
+    </script>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <h1 style="text-align: center;">&#9876; &#119828;&#119847;&#119842;&#119836;&#119848;&#119837;&#119838; &#119813;&#119851;&#119834;&#119844;&#119853;&#119854;&#119851; &#9876;</h1>
+        <button onclick="clearText()" style="margin-bottom: 10px;">Clear</button>
+        <div style="position: relative;">
+            <textarea id="textInput" oninput="convertToFraktur(), convertToBoldFraktur()" placeholder="Text" style="width: 300px; height: 200px;"></textarea>
+        </div>
+        <textarea id="frakturOutput" readonly placeholder="Fraktur Text" style="width: 300px; height: 200px; margin-top: 20px;"></textarea>
+        <textarea id="boldfrakturOutput" readonly placeholder="Bold Fraktur Text" style="width: 300px; height: 200px; margin-top: 20px;"></textarea>
+    </div>
+</body>
+</html>
